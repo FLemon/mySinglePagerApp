@@ -1,0 +1,11 @@
+{
+  "name"         : "mySinglePagerApp",
+  "version"      : "0.0.1",
+  "description"  : "Simple single pager application.",
+  "main"         : "server.js",
+  "author"       : "Jin",
+  "dependencies" : {
+    "express"    : "~3.4.4",
+    "mongoose"   : "~3.6.2"
+  }
+}
