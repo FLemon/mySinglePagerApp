@@ -1,8 +1,14 @@
 // load the todo model
 var Todo = require('./server/models/todos');
+var Twit = require('./server/models/twits');
 
 module.exports = function(app) {
   // API routes ===============
+
+  app.get('/api/twits', function(req, res) {
+    new Twit().get(req, res);  
+  });
+
   app.get('/api/todos', function(req, res) {
     Todo.find(function(err, todos) {
       if (err) 

@@ -1,0 +1,8 @@
+{
+  // Twit module configs
+  "Twit": {
+    "api": {
+      "callbackURL": "http://mysinglepagerapp.herokuapp.com/auth/twitter/callback"
+    }
+  }
+}

@@ -1,1 +1,1 @@
-angular.module('jinTodo', ['mainCtrl', 'todoService']);
+angular.module('jinTodo', ['twitCtrl', 'twitService', 'todoCtrl', 'todoService']);
