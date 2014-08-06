@@ -3,19 +3,16 @@ angular.module('twitCtrl', [])
     console.log("twit controller");
     $scope.twits = [];
 
-    var next_twit = function() {
-      var twits = $scope.twits;
-      var random_index = Math.floor(Math.random() * twits.length);
-      $scope.random_twit = twits[random_index].text;
+    var next_twit = function(data) {
+      var random_index = Math.floor(Math.random() * data.length);
+      console.log("next index:" + random_index);
+      $scope.random_twit = data[random_index].text;
     };
 
     Twits.get()
       .success(function(data) {
-        var random_index = Math.floor(Math.random() * data.length);
-        $scope.random_twit = data[random_index].text;
-        $scope.twits = data;
-        console.log(data.length);
+        console.log("success");
+        next_twit(data);
+        $interval(function() { next_twit(data); }, 5000);
       });
-
-    $interval(next_twit, 5000); 
   });
