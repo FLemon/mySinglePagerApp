@@ -1,3 +1,4 @@
+var config = require('config');
 module.exports = {
-  url: 'mongodb://localhost/mySinglePagerApp-dev'
+  url: process.env.MONGOHQ_URL || config.get("DB.url")
 }
