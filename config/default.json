@@ -1,5 +1,8 @@
 {
   // Twit module configs
+  "general": {
+    "next_twit_delay_time": 5
+  },
   "Twit": {
     "api": {
       "user_name": "shitjinsays",
