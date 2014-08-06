@@ -2,7 +2,7 @@
   // Twit module configs
   "Twit": {
     "api": {
-      "callbackURL": "http://mysinglepagerapp.herokuapp.com/auth/twitter/callback"
+      "callbackURL": "http://jinthepimp.herokuapp.com/auth/twitter/callback"
     }
   }
 }
