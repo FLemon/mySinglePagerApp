@@ -1,0 +1,4 @@
+--debug
+--recursive
+--reporter dot
+--ui bdd

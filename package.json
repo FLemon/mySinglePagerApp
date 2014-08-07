@@ -4,10 +4,13 @@
   "description"  : "Simple single pager application.",
   "main"         : "server.js",
   "author"       : "Jin",
+  "devDependencies" : {
+    "mocha"      : "~1.21.4"
+  },
   "dependencies" : {
     "config"     : "~1.0.2",
     "twit"       : "~1.1.18",
     "express"    : "~3.4.4",
-    "mongoose"   : "~3.6.2"
+    "mongoose"   : "~3.8.14"
   }
 }

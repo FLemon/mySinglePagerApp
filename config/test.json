@@ -1,0 +1,5 @@
+{
+  "DB": {
+    "url": "mongodb://localhost/mySinglePagerApp-test"
+  }
+}
