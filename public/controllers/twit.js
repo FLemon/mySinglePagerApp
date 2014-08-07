@@ -13,6 +13,6 @@ angular.module('twitCtrl', [])
       .success(function(data) {
         console.log("success");
         next_twit(data);
-        $interval(function() { next_twit(data); }, 5000);
+        $interval(function() { next_twit(data); }, 10000);
       });
   });
