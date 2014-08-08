@@ -1,18 +1,25 @@
 // load the todo model
 var Todo = require('./server/models/todos');
 var Twit = require('./server/models/twits');
+var config = require('config');
 
 module.exports = function(app) {
   // API routes ===============
   var cachedTwits = [];
+  var delayTime = config.get('general.nextTwit.delayTime');
+
+  var returnTwits = function(res) {
+    res.json({twitsCollection: cachedTwits, delayTime: delayTime});
+  }
+
   var cacheTwits = function(twitsCollection, res) {
     cachedTwits = twitsCollection;
-    res.json(cachedTwits);
+    returnTwits(res);
   }
 
   app.get('/api/twits', function(req, res) {
     if (cachedTwits.length !== 0)
-      res.json(cachedTwits);
+      returnTwits(res);
     else
       new Twit().get(cacheTwits, res);
   });

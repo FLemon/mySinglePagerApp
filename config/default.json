@@ -1,5 +1,10 @@
 {
   // Twit module configs
+  "general": {
+    "nextTwit": {
+      "delayTime": 1000
+    }
+  },
   "Twit": {
     "api": {
       "userName": "shitjinsays",

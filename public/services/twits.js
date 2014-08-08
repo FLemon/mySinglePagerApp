@@ -5,6 +5,9 @@ angular.module('twitService', [])
       get: function() {
         console.log("twit services");
         return $http.get('api/twits');
+      },
+      placeHolderTwit: function() {
+        return 'Yo! Jin has something to say';
       }
     }
   });

@@ -2,12 +2,12 @@ angular.module('todoCtrl', [])
   .controller('todoController', function($scope, $http, Todos) {
     console.log("todo controller");
 
-    var init_page = function() {
+    var init_todo = function() {
       $scope.formData = {};
       $scope.err_msg = '';
     }
 
-    init_page();
+    init_todo();
 
     Todos.get()
       .success(function(data) {
@@ -18,7 +18,7 @@ angular.module('todoCtrl', [])
       if (!$.isEmptyObject($scope.formData)) {
         Todos.create($scope.formData)
           .success(function(data) {
-            init_page();
+            init_todo();
             $scope.todos = data;
           })
           .error(function(err, status) {
