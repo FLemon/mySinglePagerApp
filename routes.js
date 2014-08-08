@@ -4,9 +4,17 @@ var Twit = require('./server/models/twits');
 
 module.exports = function(app) {
   // API routes ===============
+  var cachedTwits = [];
+  var cacheTwits = function(twitsCollection, res) {
+    cachedTwits = twitsCollection;
+    res.json(cachedTwits);
+  }
 
   app.get('/api/twits', function(req, res) {
-    new Twit().get(req, res);  
+    if (cachedTwits.length !== 0)
+      res.json(cachedTwits);
+    else
+      new Twit().get(cacheTwits, res);
   });
 
   app.get('/api/todos', function(req, res) {
