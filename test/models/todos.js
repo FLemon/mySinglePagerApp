@@ -1,5 +1,5 @@
 var helper = require('../test_helper');
-var Todo = require('./../../server/models/todos');
+var Todo = require('../../server/models/todos');
 var assert = require("assert");
 
 describe('Todo', function() {

@@ -1,16 +1,16 @@
 {
-  "name"         : "mySinglePagerApp",
-  "version"      : "0.0.1",
-  "description"  : "Simple single pager application.",
-  "main"         : "server.js",
-  "author"       : "Jin",
-  "devDependencies" : {
-    "mocha"      : "~1.21.4"
+  "name": "mySinglePagerApp",
+  "version": "0.0.1",
+  "description": "Simple single pager application.",
+  "main": "server.js",
+  "author": "Jin",
+  "devDependencies": {
+    "mocha": "~1.21.4"
   },
-  "dependencies" : {
-    "config"     : "~1.0.2",
-    "twit"       : "~1.1.18",
-    "express"    : "~3.4.4",
-    "mongoose"   : "~3.8.14"
+  "dependencies": {
+    "config": "~1.0.2",
+    "twit": "~1.1.18",
+    "express": "~3.4.4",
+    "mongoose": "~3.8.14"
   }
 }
