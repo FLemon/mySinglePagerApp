@@ -5,7 +5,6 @@ angular.module('twitCtrl', [])
 
     var next_twit = function(data) {
       var random_index = Math.floor(Math.random() * data.length);
-      console.log("next index:" + random_index);
       $scope.random_twit = data[random_index].text;
     };
 

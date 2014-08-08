@@ -22,8 +22,11 @@ module.exports = function(app) {
       text: req.body.text,
       done: false
     }, function(err, todo) {
-      if (err)
-        res.send(err);
+      if (err) {
+        var err_msg = (err.code === 11000 || err.code === 11001) ?
+          'Already exists!' : err.errors.text.message;
+        res.json(400, { message: err_msg });
+      }
 
       Todo.find(function(err, todos) {
         if (err) 
