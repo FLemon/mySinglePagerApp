@@ -1,52 +1,61 @@
-<div ng-controller="twitController">
-  <div class="container">
-    <div class="text-center">
-      <blockquote class="pull-right">
-        <p>{{ randomTwit }}</p>
-        <small>ShitJinSays from <cite title="Pimper World">Pimper World</cite></small>
-      </blockquote>
-    </div>
-  </div>
-</div>
-
-<div ng-controller="todoController">
-  <div class="container">
-
-    <div class="jumbotron text-center">
-      <h1>Feature List
-        <span class="label label-info">
-          {{ todos.length }}
-        </span>
-      </h1>
-    </div>
-
-    <div id="todo-list" class="row">
-      <div class="col-sm-4 col-sm-offset-4">
-        <div class="checkbox" ng-repeat="todo in todos">
-          <label>
-            <input type="checkbox" ng-click="deleteTodo(todo._id)">
-            {{ todo.text }}
-          </label>
+<div class="container">
+  <div class="col-sm-8">
+    <div ng-controller="twitController">
+      <div class="container">
+        <div class="text-center">
+          <blockquote class="pull-right" ng-style="{height:'80px'}">
+            <p>{{ randomTwit }}</p>
+            <small>ShitJinSays from <cite title="Pimper World">Pimper World</cite></small>
+          </blockquote>
         </div>
       </div>
     </div>
 
-    <div>
-      <div class="col-sm-8 col-sm-offset-2 text-center">
-        {{ err_msg }}
-      </div>
-    </div>
-    <div id="todo-form" class="row">
-      <div class="col-sm-8 col-sm-offset-2 text-center">
-        <form>
-          <div class="form-group">
-            <input id="new-todo" type="text" class="form-control input-lg text-center" placeholder="The feature I want is ..." ng-model="formData.text">
+    <div ng-controller="todoController">
+      <div class="container">
+
+        <div class="jumbotron text-center">
+          <h1>Feature List
+            <span class="label label-info">
+              {{ todos.length }}
+            </span>
+          </h1>
+        </div>
+
+        <div id="todo-list" class="row">
+          <div class="col-sm-4 col-sm-offset-4">
+            <div class="checkbox" ng-repeat="todo in todos">
+              <label>
+                <input type="checkbox" ng-click="deleteTodo(todo._id)">
+                {{ todo.text }}
+              </label>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">
-            Add
-          </button>
-        </form>
+        </div>
+
+        <div>
+          <div class="col-sm-8 col-sm-offset-2 text-center">
+            {{ err_msg }}
+          </div>
+        </div>
+        <div id="todo-form" class="row">
+          <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+              <div class="form-group">
+                <input id="new-todo" type="text" class="form-control input-lg text-center" placeholder="The feature I want is ..." ng-model="formData.text">
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">
+                Add
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="col-sm-4">
+    <img ng-src="https://dl.dropboxusercontent.com/u/76109132/holahoop%20texted.gif">
+    <img ng-src="https://dl.dropboxusercontent.com/u/76109132/walk%20along%20texted.gif">
   </div>
 </div>
