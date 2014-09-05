@@ -1,74 +1,14 @@
 <div class="container">
-  <div class="col-sm-8">
-    <div ng-controller="twitController">
-      <div class="container">
-        <div class="text-center">
-          <blockquote class="pull-right" ng-style="{height:'80px'}">
-            <p>{{ randomTwit }}</p>
-            <small>ShitJinSays from <cite title="Pimper World">Pimper World</cite></small>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-
-    <div ng-controller="todoController">
-      <div class="container">
-
-        <div class="text-center">
-          <h1 id="bigTitle">
-            <span class="fire">F</span>
-            <span class="burn">e</span>
-            <span class="fire">a</span>
-            <span class="burn">t</span>
-            <span class="fire">u</span>
-            <span class="burn">r</span>
-            <span class="fire">e</span>
-            <span> &nbsp; </span>
-            <span class="burn">L</span>
-            <span class="fire">i</span>
-            <span class="burn">s</span>
-            <span class="fire">t</span>
-            <span> &nbsp; </span>
-            <span>
-              {{ todos.length }}
-            </span>
-          </h1>
-        </div>
-
-        <div id="todo-list" class="row">
-          <div class="col-sm-4 col-sm-offset-4">
-            <div class="checkbox" ng-repeat="todo in todos">
-              <label>
-                <input type="checkbox" ng-click="deleteTodo(todo._id)">
-                {{ todo.text }}
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="col-sm-8 col-sm-offset-2 text-center">
-            {{ err_msg }}
-          </div>
-        </div>
-        <div id="todo-form" class="row">
-          <div class="col-sm-8 col-sm-offset-2 text-center">
-            <form>
-              <div class="form-group">
-                <input id="new-todo" type="text" class="form-control input-lg text-center" placeholder="The feature I want is ..." ng-model="formData.text">
-              </div>
-              <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">
-                Add
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div ng-controller="twitController" class="col-sm-12">
+    <div my-twits></div>
   </div>
 
-  <div class="col-sm-4">
-    <img ng-src="https://dl.dropboxusercontent.com/u/76109132/holahoop%20texted.gif">
-    <img ng-src="https://dl.dropboxusercontent.com/u/76109132/walk%20along%20texted.gif">
+  <div ng-controller="todoController">
+    <div my-todos></div>
   </div>
+
+  <!-- <div class="col&#45;sm&#45;4"> -->
+  <!--   <img ng&#45;src="https://dl.dropboxusercontent.com/u/76109132/holahoop%20texted.gif"> -->
+  <!--   <img ng&#45;src="https://dl.dropboxusercontent.com/u/76109132/walk%20along%20texted.gif"> -->
+  <!-- </div> -->
 </div>
