@@ -11,8 +11,9 @@ body {
 }
 
 #bigTitle span {
-  margin-right: -12px;
+  margin-right: -15px;
 }
+
 #bigTitle {
   font-family: Garamond, serif;
   line-height: 1em;
@@ -33,7 +34,7 @@ body {
     -20px -40px 30px #cd4606,
     0 -50px 55px #973716,
     10px -70px 60px #451b0e;
-  font-size: 68px;
+  font-size: 60px;
 }
 
 /* other prefixed animation blocks ommitted for brevity */

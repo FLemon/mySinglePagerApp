@@ -3,6 +3,7 @@ angular.module('todoCtrl', [])
     console.log("todo controller");
 
     var init_todo = function() {
+      $scope.modalShown = false;
       $scope.formData = {};
       $scope.err_msg = '';
     }
@@ -13,6 +14,10 @@ angular.module('todoCtrl', [])
       .success(function(data) {
         $scope.todos = data;
       });
+
+    $scope.showConfirmRemove = function () {
+        $scope.removeWanted = true;
+    };
 
     $scope.createTodo = function() {
       if (!$.isEmptyObject($scope.formData)) {
@@ -28,10 +33,17 @@ angular.module('todoCtrl', [])
       }
     };
 
-    $scope.deleteTodo = function(id) {
-      Todos.delete(id)
+    $scope.deleteClicked = function(todo) {
+      $scope.selectedTodo = todo;
+      $scope.modalShown = !$scope.modalShown;
+    }
+
+    $scope.deleteConfirmed = function() {
+      Todos.delete($scope.selectedTodo._id)
         .success(function(data) {
           $scope.todos = data;
+          $scope.modalShown = !$scope.modalShown;
+          $scope.selectedTodo = null;
         })
     };
   });

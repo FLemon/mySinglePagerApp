@@ -1,0 +1,58 @@
+.ng-modal-overlay {
+  /* A dark translucent div that covers the whole screen */
+  position:absolute;
+  z-index:9999;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:#000000;
+  opacity: 0.8;
+}
+
+.ng-modal-dialog {
+  background: transparent;
+  /* A centered div above the overlay with a box shadow. */
+  z-index:10000;
+  position: absolute;
+  width: 50%; /* Default */
+
+  /* Center the dialog */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+}
+.ng-modal-dialog-content#remove-todo {
+  background-image: url(https://dl.dropboxusercontent.com/u/76109132/holahoop%20texted.gif);
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* .ng-modal-dialog-content { */
+/*   padding:10px; */
+/*   text-align: left; */
+/* } */
+
+.ng-modal-heading {
+  font-size: 30px;
+  text-align: center;
+  color: white;
+}
+
+.ng-modal-yes {
+}
+
+.ng-modal-cancel {
+}
+
+.glyphicon-ok:before {
+  font-size: 40px;
+  color: green;
+}
+
+.glyphicon-remove:before {
+  font-size: 40px;
+  color: red;
+}

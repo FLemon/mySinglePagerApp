@@ -1,0 +1,18 @@
+<div class='ng-modal' ng-show='show'>
+  <div class='ng-modal-overlay' ng-click='hideModal()'></div>
+  <div class='ng-modal-dialog' ng-style='dialogStyle'>
+    <div class="container">
+      <div class='row'>
+        <div class='ng-modal-dialog-content col-sm-offset-2' id='remove-todo' ng-style='imageStyle'></div>
+      </div>
+      <div class='row'>
+        <div class='ng-modal-yes col-sm-2 glyphicon glyphicon-ok' ng-click='confirm()'></div>
+        <div class='ng-modal-heading col-sm-8'>
+          <strong>Removing feature:<strong>
+          <p>{{todo.text}}</p>
+        </div>
+        <div class='ng-modal-cancel col-sm-2 glyphicon glyphicon-remove' ng-click='hideModal()'></div>
+      </div>
+    </div>
+  </div>
+</div>
