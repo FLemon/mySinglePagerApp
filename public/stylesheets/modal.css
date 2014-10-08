@@ -36,7 +36,7 @@
 /* } */
 
 .ng-modal-heading {
-  font-size: 30px;
+  font-size: 4vmin;
   text-align: center;
   color: white;
 }
@@ -48,11 +48,11 @@
 }
 
 .glyphicon-ok:before {
-  font-size: 40px;
+  font-size: 4vmin;
   color: green;
 }
 
 .glyphicon-remove:before {
-  font-size: 40px;
+  font-size: 4vmin;
   color: red;
 }
