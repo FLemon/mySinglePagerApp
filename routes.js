@@ -78,13 +78,13 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/api/git/user/:user', function(req, res) {
-    new Git().user.getFrom({
-      user: (req.params.user === "undefined") ? "Flemon" : req.params.user
-    }, function(err, user) {
+  app.get('/api/git/user', function(req, res) {
+    new Git().search.users({
+      q: (req.query.email === "undefined") ? "jin.xie@alliants.com" : req.query.email
+    }, function(err, data) {
       if (err)
         res.send(err)
-      res.json(user)
+      res.json(data.items[0])
     });
   });
 

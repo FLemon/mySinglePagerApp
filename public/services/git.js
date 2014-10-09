@@ -4,8 +4,8 @@ angular.module('gitService', [])
     console.log("git service");
 
     return {
-      user: function(user) {
-        return $http.get('api/git/user/' + user);
+      user: function(email) {
+        return $http.get('api/git/user?email=' + email);
       }
     } 
   });
