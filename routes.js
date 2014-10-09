@@ -1,6 +1,7 @@
 // load the todo model
 var Todo = require('./server/models/todos');
 var Twit = require('./server/models/twits');
+var Git = require('./server/models/git');
 var config = require('config');
 
 module.exports = function(app) {
@@ -63,6 +64,27 @@ module.exports = function(app) {
           res.send(err)
         res.json(todos);
       });
+    });
+  });
+
+  app.get('/api/git/commits', function(req, res) {
+    new Git().repos.getCommits({
+      user: "Flemon",
+      repo: "mySinglePagerApp"
+    }, function(err, commits) {
+      if (err)
+        res.send(err)
+      res.json(commits)
+    });
+  });
+
+  app.get('/api/git/user/:user', function(req, res) {
+    new Git().user.getFrom({
+      user: (req.params.user === "undefined") ? "Flemon" : req.params.user
+    }, function(err, user) {
+      if (err)
+        res.send(err)
+      res.json(user)
     });
   });
 
