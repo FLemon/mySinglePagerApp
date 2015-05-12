@@ -19,7 +19,7 @@ angular.module('confirmDirective', [])
           scope.imageStyle.height = imageHeight;
         scope.hideModal = function() {
           scope.show = false;
-        }; 
+        };
       },
       templateUrl: '/templates/confirm-remove.html'
     };

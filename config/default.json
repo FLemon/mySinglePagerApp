@@ -12,6 +12,11 @@
       "callbackURL": "http://127.0.0.1:5000/auth/twitter/callback"
     }
   },
+  "Google": {
+    "api": {
+      "callbackURL": "http://127.0.0.1:5000/auth/google/callback"
+    }
+  },
   "DB": {
     "url": "mongodb://localhost/mySinglePagerApp-dev"
   }

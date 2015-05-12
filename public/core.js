@@ -1,6 +1,8 @@
-angular.module('jinTodo', ['ngRoute', 'twitCtrl', 'twitService', 'twitDirective',
+angular.module('jinTodo', ['ngRoute', 'ngCookies',
+  'twitCtrl', 'twitService', 'twitDirective',
   'todoCtrl', 'todoService', 'todoDirective', 'confirmDirective',
-  'gitCtrl', 'gitService', 'gitDirective']).
+  'gitCtrl', 'gitService', 'gitDirective',
+  'loginCtrl', 'loginDirective']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {
       controller: function() {},

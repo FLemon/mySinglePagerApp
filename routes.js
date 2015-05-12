@@ -4,12 +4,14 @@ var Twit = require('./server/models/twits');
 var Git = require('./server/models/git');
 var config = require('config');
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
   // API routes ===============
   var cachedTwits = [];
   var delayTime = config.get('general.nextTwit.delayTime');
+  var user;
 
   var returnTwits = function(res) {
+    res.set("Access-Control-Allow-Origin", "*")
     res.json({twitsCollection: cachedTwits, delayTime: delayTime});
   }
 
@@ -27,7 +29,7 @@ module.exports = function(app) {
 
   app.get('/api/todos', function(req, res) {
     Todo.find(function(err, todos) {
-      if (err) 
+      if (err)
         res.send(err)
       res.json(todos);
     });
@@ -45,7 +47,7 @@ module.exports = function(app) {
       }
 
       Todo.find(function(err, todos) {
-        if (err) 
+        if (err)
           res.send(err)
         res.json(todos);
       });
@@ -54,9 +56,9 @@ module.exports = function(app) {
 
   app.delete('/api/todos/:todo_id', function(req, res) {
     Todo.remove({
-      _id : req.params.todo_id 
+      _id : req.params.todo_id
     }, function(err, todo) {
-      if (err) 
+      if (err)
         res.send(err);
 
       Todo.find(function(err, todos) {
@@ -84,11 +86,40 @@ module.exports = function(app) {
     }, function(err, data) {
       if (err)
         res.send(err)
+      res.set("Access-Control-Allow-Origin", "*")
       res.json(data.items[0])
     });
   });
 
-  //App route
+  app.get('/user', passport.authenticate('bearer', { session: false }),
+    function(req, res) {
+      res.json({ user: req.user.google })
+  });
+
+  // =====================================
+  // GOOGLE ROUTES =======================
+  // =====================================
+  // send to google to do the authentication
+  // profile gets us their basic information including their name
+  // email gets their emails
+  app.get('/auth/google',
+    passport.authenticate('google', { session: false, scope: ['profile', 'email'] })
+  );
+
+  // the callback after google has authenticated the user
+  app.get('/auth/google/callback',
+    passport.authenticate('google', { session: false, failureRedirect: '/'}),
+    function(req, res) {
+      res.send("<script>window.opener.$scope.token=\""+req.user.google.token+"\"; window.close()</script>")
+    }
+  );
+
+  // =====================================
+  // MAIN APP ROUTES =====================
+  // =====================================
+  // When the url doesnt match any of the above defined routes
+  // send to index.html
+
   app.get('*', function(req, res) {
     res.sendfile('./public/index.html');
   });

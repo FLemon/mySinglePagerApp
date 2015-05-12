@@ -1,0 +1,16 @@
+{
+  "Twit": {
+    "api": {
+      "apiKey": "4fHKkAZoiGKw9NRcXHUMOHOpY",
+      "apiSecret": "paYnWeTMe1pbLR86TzPgcVKSjjrd4LUFL8gmi66b5fnSeMezvs",
+      "accessToken": "562945209-rLAvPc1gLV1ay6wqGJRm2LeHuyE8OICCqS2RVKIn",
+      "accessSecret": "lJ10ezjeYJggLFdd6k7apRcIFOjOJyUa9rp2sY3Ay9xVf"
+    }
+  },
+  "Google": {
+    "api": {
+      "clientId": "71159461597-ort67rb7kpuksa9h1qn35ik6ph4e06bp.apps.googleusercontent.com",
+      "clientSecret": "a4LsCO_yGeXpHH6pDm-YHgoQ"
+    }
+  }
+}
