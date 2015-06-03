@@ -121,6 +121,12 @@ module.exports = function(app, passport) {
   // send to index.html
 
   app.get('*', function(req, res) {
-    res.sendfile('./public/index.html');
+    var schema = req.headers["x-forwarded-proto"]
+
+    if (process.env.NODE_ENV === 'production' && schema !== "https") {
+      res.redirect("https://" + req.host + req.url)
+    } else {
+      res.sendfile('index.html')
+    }
   });
 };
