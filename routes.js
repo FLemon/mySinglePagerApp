@@ -123,7 +123,7 @@ module.exports = function(app, passport) {
   app.get('*', function(req, res) {
     var schema = req.headers["x-forwarded-proto"]
 
-    if (process.env.NODE_ENV === 'production' && schema !== "https") {
+    if ((process.env.NODE_ENV === 'production' || process.env.PLATFORM == 'cloud9') && schema !== "https") {
       res.redirect("https://" + req.host + req.url)
     } else {
       res.sendfile('index.html')
