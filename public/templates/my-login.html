@@ -1,8 +1,9 @@
 <div class="container">
-  <div ng-hide="user" class="pull-left" href="#">
+  <div class="pull-left" href="#">
     <p>Login with:</p>
     <a ng-click="googleAuth()" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
   </div>
 
-  <p ng-show="user">{{user.name}}</p>
+  <p >{{user.name}}</p>
+  <p >{{user.email}}</p>
 </div>

@@ -16,7 +16,7 @@ angular.module('todoCtrl', [])
       });
 
     $scope.showConfirmRemove = function () {
-        $scope.removeWanted = true;
+      $scope.removeWanted = true;
     };
 
     $scope.createTodo = function() {

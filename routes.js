@@ -91,9 +91,9 @@ module.exports = function(app, passport) {
     });
   });
 
-  app.get('/user', passport.authenticate('bearer', { session: false }),
+  app.get('/api/user', passport.authenticate('bearer', { session: false }),
     function(req, res) {
-      res.json({ user: req.user.google })
+      res.json(req.user.google)
   });
 
   // =====================================

@@ -1,18 +1,9 @@
 angular.module('loginCtrl', [])
-.controller('loginController', function($scope, $window, $interval, $http, $cookieStore) {
+.controller('loginController', function($scope, $window, $interval, $http, $cookieStore, User) {
   console.log("login controller");
-  $scope.token = $cookieStore.get('access_token')
 
-  var getUser = function(token, callback) {
-    if ($scope.token)
-      $http.get('/user', { headers: { 'Authorization': 'Bearer '+$scope.token } }).success(function(data) {
-        $scope.user = data.user
-        if (callback)
-          callback()
-      })
-  }
-
-  getUser($scope.token)
+  $scope.user = User
+  $scope.user.update()
 
   $scope.googleAuth = function() {
     var left = screen.width/2 - 200,
@@ -23,11 +14,16 @@ angular.module('loginCtrl', [])
     $window.$scope = $scope
 
     var i = $interval(function() {
-      if ($scope.token)
-        getUser($scope.token, function() {
-          $cookieStore.put('access_token', $scope.token)
-          $interval.cancel(i)
-        })
+      if ($scope.token) {
+        $cookieStore.put('access_token', $scope.token)
+        $scope.token = ''
+      }
+
+      if ($cookieStore.get('access_token')) {
+        console.log("got it:" + $cookieStore.get('access_token'))
+        $interval.cancel(i)
+        User.update()
+      }
     },
     interval);
   };
