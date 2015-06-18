@@ -17,13 +17,11 @@ angular.module('loginCtrl', [])
       if ($scope.token) {
         $cookieStore.put('access_token', $scope.token)
         $scope.token = ''
+        console.log("got it:" + $cookieStore.get('access_token'))
+        User.update()
+        $interval.cancel(i)
       }
 
-      if ($cookieStore.get('access_token')) {
-        console.log("got it:" + $cookieStore.get('access_token'))
-        $interval.cancel(i)
-        User.update()
-      }
     },
     interval);
   };
