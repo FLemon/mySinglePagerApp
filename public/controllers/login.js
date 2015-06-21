@@ -2,8 +2,8 @@ angular.module('loginCtrl', [])
 .controller('loginController', function($scope, $window, $interval, $http, $cookieStore, User) {
   console.log("login controller");
 
+  console.log(User)
   $scope.user = User
-  $scope.user.update()
 
   $scope.googleAuth = function() {
     var left = screen.width/2 - 200,
@@ -18,7 +18,7 @@ angular.module('loginCtrl', [])
         $cookieStore.put('access_token', $scope.token)
         $scope.token = ''
         console.log("got it:" + $cookieStore.get('access_token'))
-        User.update()
+        User.sync()
         $interval.cancel(i)
       }
 

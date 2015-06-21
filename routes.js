@@ -81,13 +81,19 @@ module.exports = function(app, passport) {
   });
 
   app.get('/api/git/user', function(req, res) {
+    console.log("query email: "+req.query.email)
     new Git().search.users({
       q: (req.query.email === "undefined") ? "jin.xie@alliants.com" : req.query.email
     }, function(err, data) {
+      console.log("git request data: "+data.items)
       if (err)
         res.send(err)
-      res.set("Access-Control-Allow-Origin", "*")
-      res.json(data.items[0])
+      else if (data.total_count > 0) {
+        res.set("Access-Control-Allow-Origin", "*")
+        res.json(data.items[0])
+      } else {
+        res.json("not registed github user")
+      }
     });
   });
 
