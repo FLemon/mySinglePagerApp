@@ -1,11 +1,13 @@
 <div class="container">
   <div class="media" ng-show="git.avatarUrl">
-    <a class="pull-left" href="#">
-      <img class="media-object" ng-src={{git.avatarUrl}}>
+    <a class="pull-left">
+      <img class="media-object img-circle" ng-src={{git.avatarUrl}}>
     </a>
     <div class="media-body">
       <h4 class="media-heading">{{git.userName}}</h4>
-      {{git.location}}
+      <a  ng-href={{git.htmlUrl}}>
+        <img width="20px" src="/gitmark.png">
+      </a>
     </div>
   </div>
 </div>

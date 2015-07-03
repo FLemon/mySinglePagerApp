@@ -3,15 +3,17 @@
     <div my-twits></div>
   </div>
 
-  <div ng-controller="loginController">
-    <div my-login></div>
+  <div class="col-sm-3">
+    <div ng-controller="loginController">
+      <div my-login></div>
+    </div>
+
+    <div ng-controller="gitController">
+      <div my-git></div>
+    </div>
   </div>
 
-  <div ng-controller="gitController">
-    <div my-git></div>
-  </div>
-
-  <div ng-controller="todoController">
+  <div ng-controller="todoController" class="col-sm-9">
     <div my-todos></div>
   </div>
 

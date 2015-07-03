@@ -6,7 +6,7 @@ angular.module('gitService', [])
 
     Git.userName = ''
     Git.avatarUrl = ''
-    Git.location = ''
+    Git.htmlUrl = ''
 
     Git.sync = function(email) {
       console.log("email: " + email)
@@ -14,7 +14,7 @@ angular.module('gitService', [])
         console.log("git data: "+data)
         Git.userName = data.login
         Git.avatarUrl = data.avatar_url
-        Git.location = data.location
+        Git.htmlUrl = data.html_url
       })
 
     }

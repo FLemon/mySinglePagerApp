@@ -1,9 +1,7 @@
 <div class="container">
-  <div class="pull-left" href="#">
-    <p>Login with:</p>
-    <a ng-click="googleAuth()" class="btn btn-danger"><span class="fa fa-google-plus"></span> Google</a>
+  <div class="pull-left col-sm-12" href="#">
+    <a ng-click="googleAuth()" class="btn btn-danger">
+      <span class="fa fa-google-plus"></span>{{user.name || 'Google Login'}}
+    </a>
   </div>
-
-  <p >{{user.name}}</p>
-  <p >{{user.email}}</p>
 </div>
