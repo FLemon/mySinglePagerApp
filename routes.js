@@ -4,7 +4,7 @@ var Twit = require('./server/models/twits');
 var Git = require('./server/models/git');
 var config = require('config');
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, wss) {
   // API routes ===============
   var cachedTwits = [];
   var delayTime = config.get('general.nextTwit.delayTime');
@@ -46,11 +46,15 @@ module.exports = function(app, passport) {
         res.json(400, { message: err_msg });
       }
 
-      Todo.find(function(err, todos) {
-        if (err)
-          res.send(err)
-        res.json(todos);
+      wss.clients.forEach(function each(client) {
+        var boardcastdata = {
+          operation: "assert",
+          data: todo
+        }
+        client.send(JSON.stringify(boardcastdata));
       });
+
+      res.json(todo);
     });
   });
 
@@ -61,10 +65,14 @@ module.exports = function(app, passport) {
       if (err)
         res.send(err);
 
-      Todo.find(function(err, todos) {
-        if (err)
-          res.send(err)
-        res.json(todos);
+      wss.clients.forEach(function each(client) {
+        var boardcastdata = {
+          operation: 'delete',
+          data: req.params.todo_id
+        }
+        client.send(JSON.stringify(boardcastdata));
+
+        res.json(todo);
       });
     });
   });
@@ -85,7 +93,6 @@ module.exports = function(app, passport) {
     new Git().search.users({
       q: (req.query.email === "undefined") ? "jin.xie@alliants.com" : req.query.email
     }, function(err, data) {
-      console.log("git request data: "+data.items)
       if (err)
         res.send(err)
       else if (data.total_count > 0) {
