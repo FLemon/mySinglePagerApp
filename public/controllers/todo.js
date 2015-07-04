@@ -81,9 +81,11 @@ angular.module('todoCtrl', [])
 
     $scope.deleteConfirmed = function() {
       Todos.delete($scope.selectedTodo._id)
-        .success(function(data) {
-          $scope.modalShown = !$scope.modalShown;
-          $scope.selectedTodo = null;
+        .error(function(err) {
+          if (!$.isEmptyObject(err) && err.message)
+            $scope.err_msg = err.message;
         })
+        $scope.modalShown = !$scope.modalShown;
+        $scope.selectedTodo = null;
     };
   });

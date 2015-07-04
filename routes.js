@@ -62,22 +62,31 @@ module.exports = function(app, passport, wss) {
 
   app.delete('/api/todos/:todo_id', passport.authenticate('bearer', { session: false }),
     function(req, res) {
-      Todo.remove({
-        _id : req.params.todo_id
-      }, function(err, todo) {
-        if (err)
-          res.send(err);
+      var todo_id = req.params.todo_id;
 
-        wss.clients.forEach(function each(client) {
-          var boardcastdata = {
-            operation: 'delete',
-            data: req.params.todo_id
-          }
-          client.send(JSON.stringify(boardcastdata));
+      Todo.findById(todo_id, function (err, todo) {
+        if (todo.userEmail === req.user.google.email) {
+          Todo.remove({
+            _id : todo_id
+          }, function(err, todo) {
+            if (err)
+              res.send(err);
 
-          res.json(todo);
-        });
+            wss.clients.forEach(function each(client) {
+              var boardcastdata = {
+                operation: 'delete',
+                data: req.params.todo_id
+              }
+              client.send(JSON.stringify(boardcastdata));
+
+              res.json(todo);
+            });
+          });
+        } else {
+          res.json(400, { message: "Oi, it's not yours" });
+        }
       });
+
   });
 
   app.get('/api/git/commits', function(req, res) {
@@ -92,7 +101,6 @@ module.exports = function(app, passport, wss) {
   });
 
   app.get('/api/git/user', function(req, res) {
-    console.log("query email: "+req.query.email)
     new Git().search.users({
       q: (req.query.email === "undefined") ? "jin.xie@alliants.com" : req.query.email
     }, function(err, data) {
