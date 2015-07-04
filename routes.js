@@ -35,46 +35,48 @@ module.exports = function(app, passport, wss) {
     });
   });
 
-  app.post('/api/todos', function(req, res) {
-    Todo.create({
-      text: req.body.text,
-      done: false
-    }, function(err, todo) {
-      if (err) {
-        var err_msg = (err.code === 11000 || err.code === 11001) ?
-          'Already exists!' : err.errors.text.message;
-        res.json(400, { message: err_msg });
-      }
-
-      wss.clients.forEach(function each(client) {
-        var boardcastdata = {
-          operation: "assert",
-          data: todo
+  app.post('/api/todos', passport.authenticate('bearer', { session: false }),
+    function(req, res) {
+      Todo.create({
+        text: req.body.text,
+        done: false
+      }, function(err, todo) {
+        if (err) {
+          var err_msg = (err.code === 11000 || err.code === 11001) ?
+            'Already exists!' : err.errors.text.message;
+          res.json(400, { message: err_msg });
         }
-        client.send(JSON.stringify(boardcastdata));
-      });
 
-      res.json(todo);
-    });
-  });
-
-  app.delete('/api/todos/:todo_id', function(req, res) {
-    Todo.remove({
-      _id : req.params.todo_id
-    }, function(err, todo) {
-      if (err)
-        res.send(err);
-
-      wss.clients.forEach(function each(client) {
-        var boardcastdata = {
-          operation: 'delete',
-          data: req.params.todo_id
-        }
-        client.send(JSON.stringify(boardcastdata));
+        wss.clients.forEach(function each(client) {
+          var boardcastdata = {
+            operation: "assert",
+            data: todo
+          }
+          client.send(JSON.stringify(boardcastdata));
+        });
 
         res.json(todo);
       });
-    });
+  });
+
+  app.delete('/api/todos/:todo_id', passport.authenticate('bearer', { session: false }),
+    function(req, res) {
+      Todo.remove({
+        _id : req.params.todo_id
+      }, function(err, todo) {
+        if (err)
+          res.send(err);
+
+        wss.clients.forEach(function each(client) {
+          var boardcastdata = {
+            operation: 'delete',
+            data: req.params.todo_id
+          }
+          client.send(JSON.stringify(boardcastdata));
+
+          res.json(todo);
+        });
+      });
   });
 
   app.get('/api/git/commits', function(req, res) {

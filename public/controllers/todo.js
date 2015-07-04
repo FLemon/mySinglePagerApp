@@ -1,5 +1,5 @@
 angular.module('todoCtrl', [])
-  .controller('todoController', function($scope, $http, Todos) {
+  .controller('todoController', function($scope, $http, Todos, User) {
     console.log("todo controller");
 
     var addTodo = function(todo) {
@@ -28,11 +28,13 @@ angular.module('todoCtrl', [])
     var ws = new WebSocket(wsHost)
     ws.onmessage = function (event) {
       var receivedData = JSON.parse(event.data)
-      console.log("todo created:"+ receivedData);
-      if (receivedData.operation === "assert")
-        addTodo(receivedData.data)
-      else if (receivedData.operation === "delete")
-        removeTodo(receivedData.data)
+      if (receivedData.operation === "assert") {
+        console.log("todo created:"+ receivedData)
+        addTodo(receivedData.data);
+      } else if (receivedData.operation === "delete") {
+        console.log("todo deleted:"+ receivedData)
+        removeTodo(receivedData.data);
+      }
     };
 
     var init_todo = function() {
@@ -59,8 +61,10 @@ angular.module('todoCtrl', [])
             init_todo();
           })
           .error(function(err, status) {
-            if (!$.isEmptyObject(err))
+            if (!$.isEmptyObject(err) && err.message)
               $scope.err_msg = err.message;
+            else if (status === 401)
+              $scope.err_msg = "Unauthorized please log in"
           })
       }
     };

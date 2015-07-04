@@ -2,7 +2,6 @@ angular.module('loginCtrl', [])
 .controller('loginController', function($scope, $window, $interval, $http, $cookieStore, User) {
   console.log("login controller");
 
-  console.log(User)
   $scope.user = User
 
   $scope.googleAuth = function() {

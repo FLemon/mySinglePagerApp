@@ -9,11 +9,11 @@ angular.module('userService', [])
 
     User.sync = function() {
       var token = $cookieStore.get('access_token')
-      console.log("use it:" + token)
       $http.get('/api/user', { headers: { 'Authorization': 'Bearer '+ token } }).success(function(data) {
         console.log(User)
         User.name = data.name
         User.email = data.email
+        User.token = data.token
         User.syncGit(User.email)
       })
     }
