@@ -70,6 +70,13 @@ angular.module('todoCtrl', [])
       }
     };
 
+    $scope.isMine = function(todo) {
+      if (todo.userEmail === User.email)
+        return true
+      else
+        return false
+    }
+
     $scope.deleteClicked = function(todo) {
       if (User.email) {
         $scope.selectedTodo = todo;
