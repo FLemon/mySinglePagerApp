@@ -2,6 +2,7 @@ angular.module('todoCtrl', [])
   .controller('todoController', function($scope, $http, Todos, User) {
     console.log("todo controller");
 
+    $scope.User = User
     var addTodo = function(todo) {
       $scope.todos.push(todo)
     }
@@ -64,14 +65,18 @@ angular.module('todoCtrl', [])
             if (!$.isEmptyObject(err) && err.message)
               $scope.err_msg = err.message;
             else if (status === 401)
-              $scope.err_msg = "Unauthorized please log in"
+              $scope.err_msg = "Login is required for assertion"
           })
       }
     };
 
     $scope.deleteClicked = function(todo) {
-      $scope.selectedTodo = todo;
-      $scope.modalShown = !$scope.modalShown;
+      if (User.email) {
+        $scope.selectedTodo = todo;
+        $scope.modalShown = !$scope.modalShown;
+      } else {
+        $scope.err_msg = "Login is required for deletion"
+      }
     }
 
     $scope.deleteConfirmed = function() {

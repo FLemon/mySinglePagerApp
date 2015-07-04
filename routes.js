@@ -39,6 +39,7 @@ module.exports = function(app, passport, wss) {
     function(req, res) {
       Todo.create({
         text: req.body.text,
+        userEmail: req.body.userEmail,
         done: false
       }, function(err, todo) {
         if (err) {

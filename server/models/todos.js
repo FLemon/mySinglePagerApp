@@ -7,6 +7,11 @@ var todoSchema = new Schema({
     type: String,
     required: 'Please put in valid {PATH}!',
     unique: true
+  },
+  userEmail: {
+    type: String,
+    required: 'Please put in valid {PATH}!',
+    unique: false
   }
 })
 
