@@ -5,9 +5,9 @@
       "delayTime": 1000
     },
     "todos": {
-      "assertionLimit": {
-        "maxNumber": 5,
-        "timeRangeInMinutes": 10
+      "assertionRestriction": {
+        "number": 5,
+        "minutes": 10
       }
     }
   },

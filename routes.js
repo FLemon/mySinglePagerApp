@@ -36,33 +36,36 @@ module.exports = function(app, passport, wss) {
   });
 
   app.post('/api/todos', passport.authenticate('bearer', { session: false }), function(req, res) {
-    var assertionLimit = config.get('general.todos.assertionLimit');
-    var now = new Date();
-    var tenMinAgo = new Date();
-    var timeRangeInMinutes = assertionLimit.timeRangeInMinutes;
-    var maxNumber = assertionLimit.maxNumber;
-    tenMinAgo.setMinutes(now.getMinutes() - timeRangeInMinutes);
+    var restriction = config.get('general.todos.assertionRestriction'),
+        now = new Date(),
+        timeBeforeRestriction = new Date(),
+        restrictionMinutes = restriction.minutes;
 
-    Todo.count({createdAt: { $gt: tenMinAgo}}, function (err, count) {
+    timeBeforeRestriction.setMinutes(now.getMinutes() - restrictionMinutes);
+
+    Todo.count({userEmail: req.user.google.email, createdAt: { $gte: timeBeforeRestriction}}, function (err, count) {
       if (err) {
         res.send(err)
       } else {
-        if (count >= maxNumber) {
+        var ResctrictionNumber = restriction.number;
+       if (count >= ResctrictionNumber) {
           Todo.find().sort('-createdAt').limit(5).exec(function (err, todos) {
             if (err) {
               res.send(err)
             } else {
-              var milliSecondsLeft = now - todos[maxNumber-1].createdAt;
+              var firstWithinTimeRange = todos[4].createdAt
+              var RestrictionRefreshTime = firstWithinTimeRange.setMinutes(firstWithinTimeRange.getMinutes() + restrictionMinutes);
+              var milliSecondsLeft = RestrictionRefreshTime - now;
               var minutesLeft = Math.floor(milliSecondsLeft / 60000);
               var secondsLeft = ((milliSecondsLeft % 60000) / 1000).toFixed(0);
-              err_msg = maxNumber + " items/" + timeRangeInMinutes + "mins restriction reached, delete some or wait for " + minutesLeft + "min " + secondsLeft + "sec";
+              err_msg = ResctrictionNumber + " items/" + restrictionMinutes + "mins restriction reached, delete some or wait for " + minutesLeft + "min " + secondsLeft + "sec";
               res.json(400, { message: err_msg});
             }
           })
         } else {
           Todo.create({
             text: req.body.text,
-            userEmail: req.body.userEmail,
+            userEmail: req.user.google.email,
             done: false
           }, function(err, todo) {
             if (err) {
