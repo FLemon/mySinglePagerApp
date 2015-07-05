@@ -35,58 +35,87 @@ module.exports = function(app, passport, wss) {
     });
   });
 
-  app.post('/api/todos', passport.authenticate('bearer', { session: false }),
-    function(req, res) {
-      Todo.create({
-        text: req.body.text,
-        userEmail: req.body.userEmail,
-        done: false
-      }, function(err, todo) {
-        if (err) {
-          var err_msg = (err.code === 11000 || err.code === 11001) ?
-            'Already exists!' : err.errors.text.message;
-          res.json(400, { message: err_msg });
+  app.post('/api/todos', passport.authenticate('bearer', { session: false }), function(req, res) {
+    var assertionLimit = config.get('general.todos.assertionLimit');
+    var now = new Date();
+    var tenMinAgo = new Date();
+    var timeRangeInMinutes = assertionLimit.timeRangeInMinutes;
+    var maxNumber = assertionLimit.maxNumber;
+    tenMinAgo.setMinutes(now.getMinutes() - timeRangeInMinutes);
+
+    Todo.count({createdAt: { $gt: tenMinAgo}}, function (err, count) {
+      if (err) {
+        res.send(err)
+      } else {
+        if (count >= maxNumber) {
+          Todo.find().sort('-createdAt').limit(5).exec(function (err, todos) {
+            if (err) {
+              res.send(err)
+            } else {
+              var milliSecondsLeft = now - todos[maxNumber-1].createdAt;
+              var minutesLeft = Math.floor(milliSecondsLeft / 60000);
+              var secondsLeft = ((milliSecondsLeft % 60000) / 1000).toFixed(0);
+              err_msg = maxNumber + " items/" + timeRangeInMinutes + "mins restriction reached, delete some or wait for " + minutesLeft + "min " + secondsLeft + "sec";
+              res.json(400, { message: err_msg});
+            }
+          })
+        } else {
+          Todo.create({
+            text: req.body.text,
+            userEmail: req.body.userEmail,
+            done: false
+          }, function(err, todo) {
+            if (err) {
+              var err_msg = (err.code === 11000 || err.code === 11001) ?
+                'Already exists!' : err.errors.text.message;
+              res.json(400, { message: err_msg });
+            } else {
+              wss.clients.forEach(function each(client) {
+                var boardcastdata = {
+                  operation: "assert",
+                  data: todo
+                }
+                client.send(JSON.stringify(boardcastdata));
+              });
+
+              res.json(todo);
+            }
+          });
         }
-
-        wss.clients.forEach(function each(client) {
-          var boardcastdata = {
-            operation: "assert",
-            data: todo
-          }
-          client.send(JSON.stringify(boardcastdata));
-        });
-
-        res.json(todo);
-      });
+      }
+    })
   });
 
-  app.delete('/api/todos/:todo_id', passport.authenticate('bearer', { session: false }),
-    function(req, res) {
-      var todo_id = req.params.todo_id;
+  app.delete('/api/todos/:todo_id', passport.authenticate('bearer', { session: false }), function(req, res) {
+    var todo_id = req.params.todo_id;
 
-      Todo.findById(todo_id, function (err, todo) {
-        if (todo.userEmail === req.user.google.email) {
+    Todo.findById(todo_id, function(err, todo) {
+      if (err) {
+        res.send(err);
+      } else {
+        if (todo.userEmail !== req.user.google.email) {
+          res.json(400, { message: "Oi, it's not yours" });
+        } else {
           Todo.remove({
             _id : todo_id
           }, function(err, todo) {
-            if (err)
+            if (err) {
               res.send(err);
+            } else {
+              wss.clients.forEach(function each(client) {
+                var boardcastdata = {
+                  operation: 'delete',
+                  data: req.params.todo_id
+                }
+                client.send(JSON.stringify(boardcastdata));
 
-            wss.clients.forEach(function each(client) {
-              var boardcastdata = {
-                operation: 'delete',
-                data: req.params.todo_id
-              }
-              client.send(JSON.stringify(boardcastdata));
-
-              res.json(todo);
-            });
+                res.json(todo);
+              });
+            }
           });
-        } else {
-          res.json(400, { message: "Oi, it's not yours" });
         }
-      });
-
+      }
+    });
   });
 
   app.get('/api/git/commits', function(req, res) {
@@ -115,9 +144,8 @@ module.exports = function(app, passport, wss) {
     });
   });
 
-  app.get('/api/user', passport.authenticate('bearer', { session: false }),
-    function(req, res) {
-      res.json(req.user.google)
+  app.get('/api/user', passport.authenticate('bearer', { session: false }), function(req, res) {
+    res.json(req.user.google)
   });
 
   // =====================================
@@ -136,21 +164,21 @@ module.exports = function(app, passport, wss) {
     function(req, res) {
       res.send("<script>window.opener.$scope.token=\""+req.user.google.token+"\"; window.close()</script>")
     }
-  );
+   );
 
-  // =====================================
-  // MAIN APP ROUTES =====================
-  // =====================================
-  // When the url doesnt match any of the above defined routes
-  // send to index.html
+   // =====================================
+   // MAIN APP ROUTES =====================
+   // =====================================
+   // When the url doesnt match any of the above defined routes
+   // send to index.html
 
-  app.get('*', function(req, res) {
-    var schema = req.headers["x-forwarded-proto"]
+   app.get('*', function(req, res) {
+     var schema = req.headers["x-forwarded-proto"]
 
-    if ((process.env.NODE_ENV === 'production' || process.env.PLATFORM == 'cloud9') && schema !== "https") {
-      res.redirect("https://" + req.host + req.url)
-    } else {
-      res.sendfile('index.html')
-    }
-  });
+     if ((process.env.NODE_ENV === 'production' || process.env.PLATFORM == 'cloud9') && schema !== "https") {
+       res.redirect("https://" + req.host + req.url)
+     } else {
+       res.sendfile('index.html')
+     }
+   });
 };

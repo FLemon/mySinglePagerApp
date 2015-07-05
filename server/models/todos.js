@@ -12,7 +12,23 @@ var todoSchema = new Schema({
     type: String,
     required: 'Please put in valid {PATH}!',
     unique: false
+  },
+  createdAt: {
+    type: Date,
+  },
+  updatedAt: {
+    type: Date
   }
+})
+
+todoSchema.pre('save', function(next) {
+  var currentDate = new Date();
+  this.updatedAt = currentDate;
+
+  if (!this.createdAt)
+    this.createdAt = currentDate;
+
+  next();
 })
 
 module.exports = mongoose.model('Todo', todoSchema);

@@ -30,7 +30,7 @@ angular.module('todoCtrl', [])
     ws.onmessage = function (event) {
       var receivedData = JSON.parse(event.data)
       if (receivedData.operation === "assert") {
-        console.log("todo created:"+ receivedData)
+        console.log(receivedData.data)
         addTodo(receivedData.data);
       } else if (receivedData.operation === "delete") {
         console.log("todo deleted:"+ receivedData)

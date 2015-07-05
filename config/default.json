@@ -3,6 +3,12 @@
   "general": {
     "nextTwit": {
       "delayTime": 1000
+    },
+    "todos": {
+      "assertionLimit": {
+        "maxNumber": 5,
+        "timeRangeInMinutes": 10
+      }
     }
   },
   "Twit": {
