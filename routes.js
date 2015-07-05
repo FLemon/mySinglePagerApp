@@ -30,8 +30,9 @@ module.exports = function(app, passport, wss) {
   app.get('/api/todos', function(req, res) {
     Todo.find(function(err, todos) {
       if (err)
-        res.send(err)
-      res.json(todos);
+        res.send(err);
+      else
+        res.json(todos);
     });
   });
 
@@ -48,7 +49,7 @@ module.exports = function(app, passport, wss) {
         res.send(err)
       } else {
         var ResctrictionNumber = restriction.number;
-       if (count >= ResctrictionNumber) {
+        if (count >= ResctrictionNumber) {
           Todo.find().sort('-createdAt').limit(5).exec(function (err, todos) {
             if (err) {
               res.send(err)
@@ -95,7 +96,7 @@ module.exports = function(app, passport, wss) {
     Todo.findById(todo_id, function(err, todo) {
       if (err) {
         res.send(err);
-      } else {
+      } else if (todo) {
         if (todo.userEmail !== req.user.google.email) {
           res.json(400, { message: "Oi, it's not yours" });
         } else {
@@ -117,6 +118,8 @@ module.exports = function(app, passport, wss) {
             }
           });
         }
+      } else {
+        res.json("todo is null");
       }
     });
   });
@@ -128,7 +131,8 @@ module.exports = function(app, passport, wss) {
     }, function(err, commits) {
       if (err)
         res.send(err)
-      res.json(commits)
+      else
+        res.json(commits)
     });
   });
 
