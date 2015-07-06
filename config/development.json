@@ -12,5 +12,11 @@
       "clientId": "71159461597-ort67rb7kpuksa9h1qn35ik6ph4e06bp.apps.googleusercontent.com",
       "clientSecret": "a4LsCO_yGeXpHH6pDm-YHgoQ"
     }
+  },
+  "Spotify": {
+    "api": {
+      "clientId": "8a844fff820249f89c08fb967471b770",
+      "clientSecret": "59039485db09490788ab87aa5c410a36"
+    }
   }
 }

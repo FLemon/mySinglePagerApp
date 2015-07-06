@@ -42,12 +42,15 @@
     <div class="col-sm-8 col-sm-offset-2 text-center">
       <form>
         <div class="form-group">
-          <input id="new-todo" type="text" class="form-control input-lg text-center" placeholder="The feature I want is ..." ng-model="formData.text">
+          <input id="new-todo" type="text" class="form-control input-lg text-center" placeholder="The feature I want is ..." ng-model="formData.text" ng-keyup="searchTracks()">
         </div>
-        <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo($event)">
           Add
         </button>
       </form>
+      <div ng-show="tracks" ng-repeat="track in tracks">
+        {{ track.name }} - <span ng-repeat="artist in track.artists">{{ artist.name }}</span>
+      </div>
     </div>
   </div>
 </div>

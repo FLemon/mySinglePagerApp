@@ -51,6 +51,12 @@ angular.module('todoCtrl', [])
         $scope.todos = data;
       });
 
+    $scope.searchTracks = function () {
+      $http.get("https://api.spotify.com/v1/search?q="+$scope.formData.text+"&type=track").success(function(data) {
+        $scope.tracks = data.tracks.items;
+      })
+    };
+
     $scope.showConfirmRemove = function () {
       $scope.removeWanted = true;
     };
