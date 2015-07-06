@@ -51,6 +51,15 @@ angular.module('todoCtrl', [])
         $scope.todos = data;
       });
 
+    $scope.selectTrack = function (track) {
+      var artists = "";
+      track.artists.forEach(function each(artist) {
+        var artistName = artist.name + " ";
+        artists += artistName;
+      })
+      $scope.formData.text = track.name + " - " + artists
+    }
+
     $scope.searchTracks = function () {
       $http.get("https://api.spotify.com/v1/search?q="+$scope.formData.text+"&type=track").success(function(data) {
         $scope.tracks = data.tracks.items;

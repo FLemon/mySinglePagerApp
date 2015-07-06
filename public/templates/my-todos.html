@@ -1,18 +1,15 @@
 <div class="container">
   <div class="text-center">
     <h1 id="bigTitle">
-      <span class="fire">F</span>
-      <span class="burn">e</span>
+      <span class="fire">P</span>
+      <span class="burn">l</span>
       <span class="fire">a</span>
+      <span class="burn">y</span>
+      <span class="fire">l</span>
+      <span class="burn">i</span>
+      <span class="fire">s</span>
       <span class="burn">t</span>
-      <span class="fire">u</span>
-      <span class="burn">r</span>
-      <span class="fire">e</span>
       <span> &nbsp; </span>
-      <span class="burn">L</span>
-      <span class="fire">i</span>
-      <span class="burn">s</span>
-      <span class="fire">t</span>
       <span> &nbsp; </span>
       <span class="fire">
         {{ todos.length }}
@@ -21,15 +18,15 @@
   </div>
 
   <div id="todo-list" class="row">
-    <div class="col-sm-4 col-sm-offset-4">
-      <div class="checkbox" ng-repeat="todo in todos">
+    <div class="col-sm-12" style="text-align: center;">
+      <div ng-repeat="todo in todos">
         <label>
-          {{ todo.text }} - {{ todo.userEmail }}
+          {{ todo.text }} <span style="font-style:italic; font-weight:100">Added By {{ todo.userEmail }}</span>
         </label>
         <span class="glyphicon glyphicon-trash" ng-click="deleteClicked(todo)" ng-show="isMine(todo)"></span>
         </div>
       </div>
-      <div ng-confirm-remove todo="selectedTodo" show="modalShown" show='modalShown' confirm='deleteConfirmed()' width='450px' height='350px'>
+      <div ng-confirm-remove todo="selectedTodo" show="modalShown" show='modalShown' confirm='deleteConfirmed()' width='700px' height='300px'>
     </div>
   </div>
 
@@ -42,14 +39,14 @@
     <div class="col-sm-8 col-sm-offset-2 text-center">
       <form>
         <div class="form-group">
-          <input id="new-todo" type="text" class="form-control input-lg text-center" placeholder="The feature I want is ..." ng-model="formData.text" ng-keyup="searchTracks()">
+          <input id="new-todo" type="text" class="form-control input-lg text-center" placeholder="Enter the name of track ..." ng-model="formData.text" ng-keyup="searchTracks()">
         </div>
         <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo($event)">
           Add
         </button>
       </form>
       <div ng-show="tracks" ng-repeat="track in tracks">
-        {{ track.name }} - <span ng-repeat="artist in track.artists">{{ artist.name }}</span>
+        <p ng-click="selectTrack(track)">{{ track.name }} - <span ng-repeat="artist in track.artists">{{ artist.name }}</span></p>
       </div>
     </div>
   </div>
