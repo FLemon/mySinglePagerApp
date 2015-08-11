@@ -36,6 +36,7 @@ angular.module('todoCtrl', [])
         console.log("todo deleted:"+ receivedData)
         removeTodo(receivedData.data);
       }
+      $scope.$apply();
     };
 
     var init_todo = function() {
