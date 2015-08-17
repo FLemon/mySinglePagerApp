@@ -59,6 +59,7 @@ angular.module('todoCtrl', [])
         artists += artistName;
       })
       $scope.formData.text = track.name + " - " + artists
+      $scope.formData.trackId = track.uri
     }
 
     $scope.searchTracks = function () {

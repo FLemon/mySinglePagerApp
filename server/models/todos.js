@@ -8,6 +8,11 @@ var todoSchema = new Schema({
     required: 'Please put in valid {PATH}!',
     unique: true
   },
+  trackId: {
+    type: String,
+    required: 'Please put in valid {PATH}!',
+    unique: true
+  },
   userEmail: {
     type: String,
     required: 'Please put in valid {PATH}!',

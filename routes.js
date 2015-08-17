@@ -1,10 +1,29 @@
 // load the todo model
-var Todo = require('./server/models/todos');
-var Twit = require('./server/models/twits');
-var Git = require('./server/models/git');
+var Todo = require('./server/models/todos'),
+    Twit = require('./server/models/twits'),
+    Git = require('./server/models/git'),
+    Spotify = require('./server/models/spotify'),
+    SpotifyWebApi = require('spotify-web-api-node');
+
 var config = require('config');
 
 module.exports = function(app, passport, wss) {
+  var spotifyApi = new SpotifyWebApi({
+        clientId : '8a844fff820249f89c08fb967471b770',
+        clientSecret : '59039485db09490788ab87aa5c410a36',
+        redirectUri : 'http://127.0.0.1:5000/auth/spotify/callback'
+      }),
+      scopes = ["playlist-modify-public"];
+
+  spotifyApi.clientCredentialsGrant()
+    .then(function(data) {
+      spotifyApi.setAccessToken(data.body['access_token']);
+    }, function(err) {
+      console.log('Something went wrong when retrieving an access token', err);
+    });
+
+  console.log(spotifyApi.createAuthorizeURL(scopes));
+
   // API routes ===============
   var cachedTwits = [];
   var delayTime = config.get('general.nextTwit.delayTime');
@@ -19,6 +38,12 @@ module.exports = function(app, passport, wss) {
     cachedTwits = twitsCollection;
     returnTwits(res);
   }
+
+  app.get('/api/spotify/tracks', function(req, res) {
+    new Spotify().tracks(spotifyApi, function(data) {
+      res.json(data);
+    })
+  });
 
   app.get('/api/twits', function(req, res) {
     if (cachedTwits.length !== 0)
@@ -54,18 +79,20 @@ module.exports = function(app, passport, wss) {
             if (err) {
               res.send(err)
             } else {
-              var firstWithinTimeRange = todos[4].createdAt
-              var RestrictionRefreshTime = firstWithinTimeRange.setMinutes(firstWithinTimeRange.getMinutes() + restrictionMinutes);
-              var milliSecondsLeft = RestrictionRefreshTime - now;
-              var minutesLeft = Math.floor(milliSecondsLeft / 60000);
-              var secondsLeft = ((milliSecondsLeft % 60000) / 1000).toFixed(0);
-              err_msg = ResctrictionNumber + " items/" + restrictionMinutes + "mins restriction reached, delete some or wait for " + minutesLeft + "min " + secondsLeft + "sec";
+              var firstWithinTimeRange = todos[4].createdAt,
+                  RestrictionRefreshTime = firstWithinTimeRange.setMinutes(firstWithinTimeRange.getMinutes() + restrictionMinutes),
+                  milliSecondsLeft = RestrictionRefreshTime - now,
+                  minutesLeft = Math.floor(milliSecondsLeft / 60000),
+                  secondsLeft = ((milliSecondsLeft % 60000) / 1000).toFixed(0),
+                  err_msg = ResctrictionNumber + " items/" + restrictionMinutes + "mins restriction reached, delete some or wait for " + minutesLeft + "min " + secondsLeft + "sec";
+
               res.json(400, { message: err_msg});
             }
           })
         } else {
           Todo.create({
             text: req.body.text,
+            trackId: req.body.trackId,
             userEmail: req.user.google.email,
             done: false
           }, function(err, todo) {
