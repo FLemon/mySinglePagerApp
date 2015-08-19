@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="text-center">
+  <div class="text-center original-title">
     <h1 id="bigTitle">
       <span class="fire">P</span>
       <span class="burn">l</span>
@@ -15,6 +15,14 @@
         {{ todos.length }}
       </span>
     </h1>
+  </div>
+
+  <div class="text-center new-title canvas-wrapper">
+    <h1>
+      Playlist {{ todos.length }}
+    </h1>
+
+    <canvas id="flaming-canvas" width="500" height="500"></canvas>
   </div>
 
   <div id="todo-list" class="row">

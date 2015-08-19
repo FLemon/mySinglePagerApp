@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jin the pimp</title>
 
-    <link rel="stylesheet", href="/stylesheets/style.css">
-    <link rel="stylesheet", href="/stylesheets/modal.css">
-    <link rel="stylesheet", href="/stylesheets/git.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/modal.css">
+    <link rel="stylesheet" href="/stylesheets/git.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script><!-- load angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js"></script>
+    <script src="controllers/theme-switch.js"></script>
     <script src="controllers/login.js"></script>
     <script src="controllers/todo.js"></script>
     <script src="controllers/twit.js"></script>
@@ -30,8 +31,19 @@
     <script src="directives/confirm-remove.js"></script>
     <script src="core.js"></script>
 
+    <script src="webgl/perlin.js"></script>
+    <script src="webgl/logger.js"></script>
+    <script src="webgl/gl-utils.js"></script>
+    <script src="webgl/particle-system.js"></script>
+    <script src="webgl/flames.js"></script>
+
+    <link id="theme-switch" rel="stylesheet" href="">
   </head>
   <body>
+    <button class="view-switch" ng-controller="themeSwitchController" ng-click="switchTheme()">
+      {{buttonText}}
+    </button>
+
     <div ng-view></div>
   </body>
 </html>

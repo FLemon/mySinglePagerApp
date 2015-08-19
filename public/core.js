@@ -1,5 +1,5 @@
 angular.module('jinTodo', ['ngRoute', 'ngCookies',
-  'twitCtrl', 'twitService', 'twitDirective',
+  'themeSwitchCtrl', 'twitCtrl', 'twitService', 'twitDirective',
   'todoCtrl', 'todoService', 'todoDirective', 'confirmDirective',
   'gitCtrl', 'gitService', 'gitDirective',
   'loginCtrl', 'loginDirective',
