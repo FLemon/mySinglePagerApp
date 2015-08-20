@@ -1,0 +1,98 @@
+.new-title {
+  display: block;
+}
+
+.view-switch {
+  background-color: lightgrey;
+  color: black;
+}
+
+.original-title {
+  display: none;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+form {
+  text-align: right;
+}
+
+[ng-show=tracks] > p {
+  color: grey;
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.3s ease;
+}
+
+[ng-show=tracks] > p:hover {
+  color: white;
+  text-shadow: 0 0 5px orangered;
+}
+
+.col-sm-8.text-center {
+  text-align: left;
+}
+
+.form-control {
+  border-radius: 0;
+  background-color: black;
+  color: white;
+  border-color: grey;
+}
+
+.form-control:focus {
+  border-color: white;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+              0 0 8px rgba(255, 123, 53, 0.6);
+}
+
+form button[type=submit].btn {
+  border-color: white;
+  background-color: transparent;
+  color: white;
+  border-radius: 0;
+  background: -webkit-linear-gradient(-45deg, #000000 0%,#ffffff 50%,#000000 100%);
+  background-size: 600%;
+  transition: background-size 0.5s ease;
+}
+
+form button[type=submit].btn:hover {
+  background-size: 400%;
+}
+
+.new-title > h1 {
+  font-family: Garamond, serif;
+  font-weight: bold;
+  font-size: 60px;
+  color: black;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px white;
+}
+
+.media-body > a > img {
+  -webkit-filter: invert(100%);
+}
+
+.canvas-wrapper {
+  position: relative;
+  border-bottom: 1px solid white;
+}
+
+#flaming-canvas {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  z-index: -1;
+
+  bottom: 0;
+  left: 50%;
+  /* half of the canvas width */
+  margin-left: -250px;
+}
+
+#todo-form input[type="text"] {
+  text-align: left;
+}

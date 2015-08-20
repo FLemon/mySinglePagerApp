@@ -208,3 +208,21 @@ div {
       10px -90px 60px #973716;
   }
 }
+
+.new-title {
+  display: none;
+}
+
+.view-switch {
+  font-family: Courier New;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border: none;
+  outline: none;
+  padding: 4px;
+  z-index: 10;
+
+  background-color: black;
+  color: orangered;
+}
