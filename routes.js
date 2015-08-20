@@ -2,12 +2,24 @@
 var Todo = require('./server/models/todos'),
     Twit = require('./server/models/twits'),
     Git = require('./server/models/git'),
+    sonos = require('sonos'),
     Spotify = require('./server/models/spotify'),
     SpotifyWebApi = require('spotify-web-api-node');
 
 var config = require('config');
 
 module.exports = function(app, passport, wss) {
+  sonos.search(function(device) {
+    // device is an instance of sonos.Sonos
+    device.currentTrack(function (err, track) {
+
+      console.log(err, track)
+    })
+    device.getMusicLibrary("playlists", {start: 0, total: 25}, function (err, result) {
+      console.log(err, result)
+    })
+  });
+
   var spotifyApi = new SpotifyWebApi({
         clientId : '8a844fff820249f89c08fb967471b770',
         clientSecret : '59039485db09490788ab87aa5c410a36',
