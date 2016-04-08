@@ -175,6 +175,22 @@ module.exports = function(app, passport, wss) {
     });
   });
 
+  app.get('/api/git/issues', function(req, res) {
+    new Git().issues.repoIssues({
+      user: "Flemon",
+      repo: "flemon.github.io"
+    }, function(err, commits) {
+      if (err)
+        res.send(err)
+      else {
+        filtered_issues = commits.filter(function(item) {
+          return !item.hasOwnProperty('pull_request')
+        })
+        res.json({blogsCollection: filtered_issues})
+      }
+    });
+  });
+
   app.get('/api/git/user', function(req, res) {
     new Git().search.users({
       q: (req.query.email === "undefined") ? "jin.xie@alliants.com" : req.query.email
@@ -224,7 +240,7 @@ module.exports = function(app, passport, wss) {
      if ((process.env.NODE_ENV === 'production' || process.env.PLATFORM == 'cloud9') && schema !== "https") {
        res.redirect("https://" + req.host + req.url)
      } else {
-       res.sendfile('index.html')
+       res.sendfile('./index.html')
      }
    });
 };
