@@ -1,5 +1,6 @@
 // load the todo model
 var Todo = require('./server/models/todos'),
+    Like = require('./server/models/like'),
     Twit = require('./server/models/twits'),
     Git = require('./server/models/git'),
     sonos = require('sonos'),
@@ -62,6 +63,22 @@ module.exports = function(app, passport, wss) {
       returnTwits(res);
     else
       new Twit().get(cacheTwits, res);
+  });
+
+  app.post('/api/like', passport.authenticate('bearer', { session: false }), function(req, res) {
+    Like.create({
+      text: req.body.text,
+      userEmail: req.user.google.email,
+      done: false
+    }, function(err, like) {
+      if (err) {
+        var err_msg = (err.code === 11000 || err.code === 11001) ?
+          'Already exists!' : err.errors.text.message;
+        res.json(400, { message: err_msg });
+      } else {
+        res.json(like);
+      }
+    })
   });
 
   app.get('/api/todos', function(req, res) {
