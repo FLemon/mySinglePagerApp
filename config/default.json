@@ -13,7 +13,7 @@
   },
   "Twit": {
     "api": {
-      "userName": "shitjinsays",
+      "userName": "TechCrunch",
       "maxTwitsCount": 200,
       "callbackURL": "http://127.0.0.1:5000/auth/twitter/callback"
     }

@@ -7,7 +7,7 @@ angular.module('twitService', [])
         return $http.get('api/twits');
       },
       placeHolder: function() {
-        return 'Yo! Jin has something to say';
+        return "Yo! What's happening toda";
       }
     }
   });
